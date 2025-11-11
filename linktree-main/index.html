@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Links da Edds</title>
+    <!-- Preload local DINRoundPro font files -->
+    <link rel="preload" href="public/fonts/dinroundpro_light.otf" as="font" type="font/otf" crossorigin>
+    <link rel="preload" href="public/fonts/dinroundpro.otf" as="font" type="font/otf" crossorigin>
+    <link rel="preload" href="public/fonts/dinroundpro_medi.otf" as="font" type="font/otf" crossorigin>
+    <link rel="preload" href="public/fonts/dinroundpro_bold.otf" as="font" type="font/otf" crossorigin>
+    <link rel="preload" href="public/fonts/dinroundpro_black.otf" as="font" type="font/otf" crossorigin>
+
+    <style>
+        html {
+            font-family: 'DINRoundPro', system-ui, -apple-system, sans-serif;
+        }
+
+        :root {
+            --bg-start: #FFF7FD;
+            --bg-end:   #F4ECFF;
+            --accent-purple: #B48CFF;
+            --accent-pink:   #FFB6E6;
+            --text-primary:  #4B3A55;
+            --text-secondary:#6D587A;
+            --card-bg:       #FFFFFF;
+            --card-border:   rgba(180,140,255,0.35);
+            --card-shadow:   rgba(180,140,255,0.14);
+            --icon-bg:       rgba(180,140,255,0.12);
+        }
+
+        html, body, a, a *, button, button *, .link-card, .link-card * {
+            cursor: none !important;
+        }
+
+        #custom-cursor {
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 64px;
+            height: 64px;
+            pointer-events: none;
+            background: url('public/cursor.png') no-repeat center / contain;
+            transform: translate(-8px, -8px);
+            will-change: transform, background-image;
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
+            filter: drop-shadow(0 6px 14px rgba(180,80,180,0.14)) saturate(1.05) brightness(1.08);
+        }
+
+        .is-pointer #custom-cursor {
+            background-image: url('public/pointer.png');
+            filter: drop-shadow(0 6px 20px rgba(255,120,200,0.12)) saturate(1.05) brightness(1.08);
+        }
+
+        @font-face {
+            font-family: 'DINRoundPro';
+            src: url('public/fonts/dinroundpro_light.otf') format('opentype');
+            font-weight: 300;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'DINRoundPro';
+            src: url('public/fonts/dinroundpro.otf') format('opentype');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'DINRoundPro';
+            src: url('public/fonts/dinroundpro_medi.otf') format('opentype');
+            font-weight: 500;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'DINRoundPro';
+            src: url('public/fonts/dinroundpro_bold.otf') format('opentype');
+            font-weight: 700;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'DINRoundPro';
+            src: url('public/fonts/dinroundpro_black.otf') format('opentype');
+            font-weight: 900;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+
+        body {
+            font-family: inherit;
+            min-height: 100vh;
+            background:
+                radial-gradient(800px 400px at 8% 10%, rgba(255,182,230,0.35), transparent 40%),
+                radial-gradient(700px 350px at 92% 12%, rgba(180,140,255,0.28), transparent 40%),
+                linear-gradient(180deg, var(--bg-start) 0%, var(--bg-end) 100%);
+            position: relative;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+            color: var(--text-primary);
+        }
+
+        input, button, textarea, select {
+            font: inherit;
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+            max-width: 580px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .content-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .avatar-section {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .avatar-container {
+            width: 128px;
+            height: 128px;
+            border-radius: 50%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .avatar-container:after {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--accent-pink) 0%, var(--accent-purple) 100%);
+            border-radius: 50%;
+            z-index: -1;
+            filter: blur(8px) opacity(0.75);
+        }
+
+        .avatar-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .name-section {
+            text-align: center;
+        }
+
+        .name-title {
+            font-size: 2.25rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            letter-spacing: 0.01em;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 10px rgba(180,140,255,0.18);
+        }
+
+        .wave-emoji {
+            display: inline-block;
+            margin-left: 0.5rem;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(-20%); }
+            50% { transform: translateY(20%); }
+        }
+
+        .social-links {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .link-wrapper {
+            width: 100%;
+            position: relative;
+            margin-bottom: 1rem;
+        }
+
+        .link-shadow {
+            position: absolute;
+            top: 3px;
+            left: 0;
+            right: 0;
+            height: calc(100% - 3px);
+            background: linear-gradient(180deg, rgba(180,140,255,0.18), rgba(255,182,230,0.10));
+            border-radius: 1rem;
+            transition: 150ms ease-out;
+        }
+
+        .link-card {
+            width: 100%;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 150ms ease-out;
+            border: 2px solid var(--card-border);
+            position: relative;
+            background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(255,255,255,0.98));
+            transform: translateY(-4px);
+            z-index: 1;
+            box-shadow: 0 8px 22px var(--card-shadow);
+            backdrop-filter: blur(2px);
+        }
+
+        .link-wrapper:hover .link-shadow {
+            top: 2px;
+        }
+
+        .link-wrapper:hover .link-card {
+            transform: translateY(-8px);
+            box-shadow: 0 16px 36px rgba(180,140,255,0.22);
+            border-color: rgba(255,182,230,0.55);
+        }
+
+        .link-wrapper:active .link-card {
+            transform: scale(0.98);
+        }
+
+        .link-wrapper:active .link-shadow {
+            transform: scale(0.98);
+        }
+
+        .link-wrapper.pressed .link-card {
+            transform: translateY(3px);
+        }
+
+        .link-wrapper.pressed .link-shadow {
+            top: 0;
+        }
+
+        .icon-wrapper {
+            flex-shrink: 0;
+            width: 48px;
+            height: 48px;
+            font-size: 1.875rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #8F62E0;
+            background: linear-gradient(135deg, var(--icon-bg), rgba(255,182,230,0.12));
+            border-radius: 12px;
+            box-shadow: inset 0 -6px 12px rgba(0,0,0,0.06);
+        }
+
+        .link-content {
+            text-align: left;
+            flex: 1;
+        }
+
+        .link-title {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.005em;
+        }
+
+        .link-description {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            opacity: 0.95;
+        }
+
+        .arrow-icon {
+            flex-shrink: 0;
+            width: 20px;
+            height: 20px;
+            color: var(--accent-purple);
+        }
+
+        .footer {
+            font-weight: 500;
+            text-align: center;
+            margin-top: 3rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .divider {
+            background: linear-gradient(90deg, rgba(180,140,255,0.45), rgba(255,182,230,0.35));
+            height: 2px;
+            width: 100%;
+            margin: 1.5rem 0 1rem 0;
+            border-radius: 4px;
+        }
+
+        .section {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            width: 100%;
+            color: var(--text-secondary);
+            margin: 0 0 2rem 0;
+        }
+
+        a {
+            color: #8A5FFF;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div id="custom-cursor"></div>
+    <div class="container">
+        <div class="content-wrapper">
+            <div class="avatar-section">
+                <div class="avatar-container">
+                    <img src="public/banner.png" alt="Bero Avatar" class="avatar-img">
+                </div>
+            </div>
+
+            <div class="name-section">
+                <h1 class="name-title">
+                    Bem vindes aos links da Edds!
+                    <span class="wave-emoji">👋</span>
+                </h1>
+            </div>
+
+            <div class="divider"></div>
+            
+            <div class="section">
+                <h2>
+                    Links Importantes
+                </h2>
+            </div>
+
+            <div class="social-links" id="mainLinks"></div>
+
+            <div class="divider"></div>
+            
+            <div class="section">
+                <h2>
+                    Links Sociais
+                </h2>
+            </div>
+            
+            <div class="social-links" id="socialLinks"></div>
+        </div>
+
+        <div class="footer">
+            <p>Made with ❤️ by <a href="https://github.com/zumbaiero" target="_blank" rel="noopener noreferrer">Zumbaiero</a></p>
+        </div>
+    </div>
+
+    <script>
+        // Custom cursor logic
+        (function() {
+            const cursorEl = document.getElementById('custom-cursor');
+            const pointerSelectors = 'a, button, .link-card';
+
+            function onMouseMove(ev) {
+                const x = ev.clientX;
+                const y = ev.clientY;
+                cursorEl.style.transform = `translate(${x - 8}px, ${y - 8}px)`;
+                const isPointer = ev.target && ev.target.closest(pointerSelectors);
+                document.documentElement.classList.toggle('is-pointer', Boolean(isPointer));
+            }
+
+            const audio = new Audio('./public/pru.mp3');
+
+            function onMouseClick(ev) {
+                audio.play();
+            }
+
+            document.addEventListener('mousemove', onMouseMove, { passive: true });
+            document.addEventListener('click', onMouseClick, { passive: true });
+        })();
+
+        const socialLinks = [
+            {
+                title: 'Instagram',
+                description: 'Perfil que uso com menos frequência, para stories, animações e posts',
+                url: 'https://www.instagram.com/neveryourrs',
+                icon: '📷',
+                event: 'instagram_click'
+            },
+            {
+                title: 'GitHub do meu namorado lindo perfeito',
+                description: 'Perfil dedicado aos meus projetos públicos',
+                url: 'https://github.com/zumbaiero',
+                icon: '🐙',
+                event: 'github_click'
+            },
+        ];
+
+        const mainLinks = [
+            {
+                title: 'Sylvanian Families',
+                description: 'Sylvanian Families Familia Dos Cervos ',
+                url: 'https://www.mercadolivre.com.br/sylvanian-families-familia-dos-cervos-epoch-5799/p/MLB47774470',
+                icon: '🦌',
+                event: 'sylvanian_families_click'
+            },
+            {
+                title: 'Brinco com laço e pingente de Estrela',
+                description: 'Cor: roxo; Modelo: Brinco normal',
+                url: 'https://br.shp.ee/GDiRtVp',
+                icon: '💍',
+                event: 'brincos_click'
+            },
+            {
+                title: 'Bolsa',
+                description: 'Cor: Bordô ',
+                url: 'https://br.shp.ee/ueZKiQe',
+                icon: '👜',
+                event: 'bolsa_click'
+            },
+            {
+                title: 'Sylvanian Families',
+                description: 'Sylvanian Families Bebê Surpresa',
+                url: 'https://br.shp.ee/W3jtkH8',
+                icon: '👼',
+                event: 'sylvanian_families_bebe_surpresa_click'
+            },
+            {
+                title: 'Blusa',
+                description: 'Cor: Off White; Tamanho: P',
+                url: 'https://br.shp.ee/XpDnrbE',
+                icon: '👚',
+                event: 'chaos_mode_click',
+                isSecret: true
+            }
+        ]
+
+        const socialLinksContainer = document.getElementById('socialLinks');
+        const mainLinksContainer = document.getElementById('mainLinks');
+
+        function renderCards(container, links) {
+            links.forEach(link => {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'link-wrapper';
+                
+                const shadow = document.createElement('div');
+                shadow.className = 'link-shadow';
+                
+                const button = document.createElement('button');
+                button.className = 'link-card';
+                button.onclick = function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    if (window.datafast) {
+                        try {
+                            Promise.resolve().then(() => window.datafast(link.event));
+                        } catch (error) {
+                            console.warn('Erro no tracking:', error);
+                        }
+                    }
+
+                    if (link.isSecret) {
+                        wrapper.classList.add('pressed');
+                        setTimeout(() => {
+                            wrapper.classList.remove('pressed');
+                            const script = document.createElement('script');
+                            script.src = './chaos-mode.js';
+                            document.body.appendChild(script);
+                        }, 150);
+                        return;
+                    }
+
+                    wrapper.classList.add('pressed');
+
+                    const newWindow = window.open(link.url, '_blank');
+                    
+                    if (!newWindow) {
+                        window.location.href = link.url;
+                    }
+                    
+                    setTimeout(() => {
+                        wrapper.classList.remove('pressed');
+                    }, 150);
+                };
+
+                button.innerHTML = `
+                    <div class="icon-wrapper">
+                        ${link.icon}
+                    </div>
+                    <div class="link-content">
+                        <h3 class="link-title">${link.title}</h3>
+                        <p class="link-description">${link.description}</p>
+                    </div>
+                    <svg class="arrow-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                `;
+
+                wrapper.appendChild(shadow);
+                wrapper.appendChild(button);
+                container.appendChild(wrapper);
+            });
+        }
+    
+        renderCards(socialLinksContainer, socialLinks);
+        renderCards(mainLinksContainer, mainLinks)
+    </script>
+    <script src="./blackboard.js"></script>
+</body>
+</html>
